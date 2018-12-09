@@ -4,6 +4,7 @@ window.onload = function(){
 	const cxc = canvas.getContext('2d');
 	canvas.width= 746;    
 	canvas.height = 252;
+	let isend = true;
 
 	// images
 	const bg = document.getElementById('bg')
@@ -17,7 +18,7 @@ window.onload = function(){
 	//maskHidden
 	let maskHidden = {
 		x:0,
-	}
+	};
 	//_________________________________________
 
 	// the three column
@@ -46,7 +47,7 @@ window.onload = function(){
 			this.random[3] = Math.floor(Math.random()*11);
 			this.step = parseInt(this.h/238);
 		}
-	}
+	};
 
 	let obj1 = new Obj(83);
 	let obj2 = new Obj(329);
@@ -72,18 +73,18 @@ window.onload = function(){
 				onCompleteParams:[objArr[i],i],
 				paused:true,
 			})
-		)
+		);
 	}
 
 	function update(obj,index){
 		cxc.clearRect(index*canvas.width/3,0,canvas.width/3,canvas.height);
 		if(Math.floor(obj.h/238)>obj.step){
-			obj.repeat()
+			obj.repeat();
 		}
 		cxc.drawImage(arr[obj.random[0]],88*obj.random[2],0,88,98,obj.x,78-obj.h+obj.step*238,88,98);
 		cxc.drawImage(arr[obj.random[1]],88*obj.random[3],0,88,98,obj.x,316-obj.h+obj.step*238,88,98);
-		cxc.drawImage(bg,index*canvas.width/3,0,canvas.width/3,canvas.height,index*canvas.width/3,0,canvas.width/3,canvas.height)
-		cxc.drawImage(mask,index*canvas.width/3,0,canvas.width/3,canvas.height,index*canvas.width/3,0,canvas.width/3,canvas.height)
+		cxc.drawImage(bg,index*canvas.width/3,0,canvas.width/3,canvas.height,index*canvas.width/3,0,canvas.width/3,canvas.height);
+		cxc.drawImage(mask,index*canvas.width/3,0,canvas.width/3,canvas.height,index*canvas.width/3,0,canvas.width/3,canvas.height);
 	}
 
 	// at the end,add 3570,mask hidden
@@ -98,7 +99,7 @@ window.onload = function(){
 				ease:Power1.easeInOut,
 				paused:true,
 			})
-		)
+		);
 
 		// TweenMax controls maskHidden'x
 		if(index==2){
@@ -108,31 +109,33 @@ window.onload = function(){
 				onUpdate:maskHiddenUpdate,
 				onComplete:maskHiddenComplete,
 			})
-		}
+		};
 	}
 
 	function maskHiddenUpdate(){
 		for(let i = 0;i<3;i++){
 			cxc.clearRect(12+246*i,12,230,230);
-			cxc.drawImage(mask,12+230*maskHidden.x,12+230*maskHidden.x,230-230*2*maskHidden.x,230-230*2*maskHidden.x,12+246*i,12,230,230)
+			cxc.drawImage(mask,12+230*maskHidden.x,12+230*maskHidden.x,230-230*2*maskHidden.x,230-230*2*maskHidden.x,12+246*i,12,230,230);
 			cxc.drawImage(arr[objArr[i].random[0]],88*objArr[i].random[2],0,88,98,objArr[i].x,78,88,98);
 		}
 	}
 
 	function maskHiddenComplete(){
 		maskHidden.x = 0;
+		isend = true;
 	}
 
-	cxc.drawImage(bg,0,0)
+	cxc.drawImage(bg,0,0);
 
 	// game start
 	btn.onclick = ()=>{
-		cxc.drawImage(mask,0,0)
-		for(let i = 0;i<tweenArr.length;i++){
-			tweenArr[i].delay(i*0.5);
-			tweenArr[i].play();
+		if(isend){
+			isend = false;
+			cxc.drawImage(mask,0,0);
+			for(let i = 0;i<tweenArr.length;i++){
+				tweenArr[i].delay(i*0.5);
+				tweenArr[i].play();
+			}
 		}
 	}
 }
-
-

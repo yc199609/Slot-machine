@@ -64,9 +64,9 @@ window.onload = function(){
 	// three TweenMax control three column's h
 	for (let i = 0;i<objArr.length;i++){
 		tweenArr.push(
-			new TweenMax(objArr[i],8,{
+			new TweenMax(objArr[i],5,{
 				h:3570,
-				ease:Power1.easeInOut,
+				ease:Power2.easeInOut,
 				onUpdate:update,
 				onUpdateParams:[objArr[i],i],
 				onComplete:complete,
@@ -90,22 +90,22 @@ window.onload = function(){
 	// at the end,add 3570,mask hidden
 	function complete(obj,index){
 		// create a new TweenMax replace old
-		tweenArr.splice(index,1,new TweenMax(obj,8,{
+		tweenArr.splice(index,1,new TweenMax(obj,5,{
 				h:obj.h+3570,
 				onUpdate:update,
 				onUpdateParams:[obj,index],
 				onComplete:complete,
 				onCompleteParams:[obj,index],
-				ease:Power1.easeInOut,
+				ease:Power2.easeInOut,
 				paused:true,
 			})
 		);
 
 		// TweenMax controls maskHidden'x
 		if(index==2){
-			new TweenMax(maskHidden,0.5,{
+			new TweenMax(maskHidden,0.2,{
 				x:0.5,
-				ease:Power1.easeIn,
+				ease:Power1.easeOut,
 				onUpdate:maskHiddenUpdate,
 				onComplete:maskHiddenComplete,
 			})
